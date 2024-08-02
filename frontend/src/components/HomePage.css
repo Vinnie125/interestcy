@@ -1,0 +1,35 @@
+html {
+    background-image: url('../../images/background.jpg');    background-size: cover; /* 使背景图片覆盖整个页面 */
+    background-position: center; /* 图片居中 */
+    background-size: cover;
+    background-repeat: no-repeat; /* 不重复背景图片 */
+    height: 100vh; /* 设置高度为视口高度 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff; /* 设置文本颜色为白色 */
+    text-align: center; /* 文本居中 */
+  }
+  
+  .content {
+    max-width: 600px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明背景，使文本更易读 */
+    border-radius: 10px; /* 圆角边框 */
+  }
+  
+  .cta-button {
+    background-color: #007bff; /* 主按钮颜色 */
+    color: #fff; /* 按钮文本颜色 */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+  
+  .cta-button:hover {
+    background-color: #0056b3; /* 悬停时按钮颜色 */
+  }
+  
