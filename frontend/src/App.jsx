@@ -4,7 +4,6 @@ import Register from './components/Register';
 import Login from './components/Login';
 import InterestGroups from './components/InterestGroups';
 import CreateGroup from './components/CreateGroup';
-import InterestGroupDetail from './components/InterestGroupDetail';
 import CreatePost from './components/CreatePost';
 import PostDetail from './components/PostDetail';
 import MyInterestGroups from './components/MyInterestGroups';
@@ -13,6 +12,7 @@ import HomePage from './components/HomePage';
 import * as util_request from './request/util.request'
 
 import * as websocket_client from './request/client.websocket'
+import InterestGroupPage from './components/InterestGroupPage';
 
 
 function App() {
@@ -31,9 +31,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/groups" element={<InterestGroups />} />
           <Route path="/create-group" element={<CreateGroup />} />
-          <Route path="/groups/:id" element={<InterestGroupDetail />} />
-          <Route path="/groups/:id/create-post" element={<CreatePost />} />
-          <Route path="/posts/:id" element={<PostDetail />} />
+          <Route path="/groups/:id" element={<InterestGroupPage />} />
+          <Route path="/createpost" element={<CreatePost />} />
+          <Route path="/groups/:groupId/posts/:postId" element={<PostDetail />} />
           <Route path="/my-groups" element={<MyInterestGroups />} />
         </Routes>
       </div>

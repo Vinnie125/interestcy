@@ -14,4 +14,11 @@ export interface Circle{
   name: string;
   description: string;
   location: string;
+  members: number;
+}
+
+export interface POST{
+  name: string;
+  content: string;
+  url: string;
 }

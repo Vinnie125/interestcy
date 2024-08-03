@@ -1,70 +1,94 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import * as axios from 'axios';
 
-function CreatePost() {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [photo, setPhoto] = useState(null);
+function CreateGroup() {
+  const [groupInfo, setGroupInfo] = useState({ name: '', content: '', url: ''});
   const navigate = useNavigate();
-  const { id } = useParams(); // 获取兴趣圈 ID
+  const { groupId } = useParams();
+  const client = axios.default;
+  const base = "http://127.0.0.1:7002/api/createpost"
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setGroupInfo({ ...groupInfo, [name]: value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('content', content);
-    if (photo) {
-      formData.append('photo', photo);
-    }
-    
-    const response = await fetch(`/groups/${id}/posts`, {
-      method: 'POST',
-      body: formData
+    client.post(base,{
+      name: groupInfo.name,
+      content: groupInfo.content,
+      url: groupInfo.url
+    })
+    .then((response) => {
+      response.data;
+      console.log(response.data);
+      
+      if (response.data.success) {
+        alert('发布成功!');
+        navigate('/my-groups');
+      } else {
+        alert('发布失败: ' + response.data.message);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
     });
-
-    const data = await response.json();
-    if (data.message === 'Post created successfully') {
-      navigate(`/groups/${id}`); // 重定向到兴趣圈详情页面
-    } else {
-      alert(data.message);
-    }
+    
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Create a New Post</h2>
-      <div>
-        <label htmlFor="title">Title:</label>
-        <input
-          id="title"
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
+    <div className="text-gray-700 flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-center">发帖</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-semibold mb-1">用户名</label>
+            <input
+              type="text"
+              name="name"
+              className="text-white w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              placeholder="请输入用户名"
+              value={groupInfo.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold mb-1">帖子内容</label>
+            <textarea
+              name="content"
+              className="text-white w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              placeholder="请输入帖子内容"
+              value={groupInfo.content}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold mb-1">图片链接</label>
+            <input
+              type="text"
+              name="url"
+              className="text-white w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              placeholder="请输入图片链接"
+              value={groupInfo.url}
+              onChange={handleChange}
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
+            发布
+          </button>
+        </form>
       </div>
-      <div>
-        <label htmlFor="content">Content:</label>
-        <textarea
-          id="content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="photo">Photo:</label>
-        <input
-          id="photo"
-          type="file"
-          accept="image/*"
-          onChange={(e) => setPhoto(e.target.files[0])}
-        />
-      </div>
-      <button type="submit">Submit</button>
-    </form>
+    </div>
   );
 }
 
-export default CreatePost;
+
+export default CreateGroup;
+

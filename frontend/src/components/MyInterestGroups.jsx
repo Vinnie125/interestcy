@@ -27,9 +27,11 @@ function MyInterestGroups() {
   }, []);
 
   return (
-    <div className="interest-groups-page">
+    <div className="interest-groups-page h-[calc(100vh-100px)] overflow-y-auto">
       <div className="header">
         <h1>我的圈子</h1>
+        <button className="create-button" onClick={() => navigate('/create-group')}>创建</button>
+
       </div>
       <div className="tabs">
         <button className="tab-button" onClick={() => navigate('/groups')}>兴趣圈</button>
@@ -53,7 +55,7 @@ function MyInterestGroups() {
               <h2>{group.name}</h2>
               <p>{group.description}</p>
               <p>{group.location} | {group.members}人</p>
-              <button className="view-button" onClick={() => navigate(`/groups/${index}`)}>查看</button>
+              <button className="view-button" onClick={() => navigate(`/groups/${group.id}`)}>查看</button>
             </div>
           </div>
         ))}

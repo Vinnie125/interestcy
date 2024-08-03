@@ -13,7 +13,7 @@ function InterestGroups() {
   const navigate = useNavigate();
 
   return (
-    <div className="interest-groups-page">
+    <div className="interest-groups-page h-[calc(100vh-100px)] overflow-y-auto">
       <div className="header">
         <h1>发现圈子</h1>
         <button className="create-button" onClick={() => navigate('/create-group')}>创建</button>

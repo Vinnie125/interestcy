@@ -1,75 +1,51 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import * as axios from 'axios';
 
 function PostDetail() {
-  const { id } = useParams();
   const [post, setPost] = useState(null);
-  const [commentContent, setCommentContent] = useState('');
+  const { groupId, postId } = useParams();
+  const client = axios.default;
+  const navigate = useNavigate();
+  const base = `http://127.0.0.1:7002/groups/${groupId}/posts`;
 
   useEffect(() => {
     const fetchPost = async () => {
-      const response = await fetch(`/posts/${id}`);
-      const data = await response.json();
-      setPost(data);
+      try {
+        const response = await client.get(base);
+        if (response.data.success) {
+          setPost(response.data.posts[postId]);
+        }
+      } catch (error) {
+        console.error('获取帖子详情失败', error);
+      }
     };
 
     fetchPost();
-  }, [id]);
+  }, [base, postId]);
 
-  const handleLike = async () => {
-    const response = await fetch(`/posts/${id}/like`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    const data = await response.json();
-    if (data.message === 'Post liked successfully') {
-      setPost(prevPost => ({ ...prevPost, likes: prevPost.likes + 1 }));
-    } else {
-      alert(data.message);
-    }
-  };
-
-  const handleCommentSubmit = async (e) => {
-    e.preventDefault();
-    const response = await fetch(`/posts/${id}/comment`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ content: commentContent })
-    });
-    const data = await response.json();
-    if (data.message === 'Comment added successfully') {
-      setPost(prevPost => ({ ...prevPost, comments: [...prevPost.comments, data.comment] }));
-      setCommentContent('');
-    } else {
-      alert(data.message);
-    }
-  };
-
-  if (!post) return <div>Loading...</div>;
+  if (!post) return <div>加载中...</div>;
 
   return (
-    <div>
-      <h2>{post.title}</h2>
-      <p>{post.content}</p>
-      <button onClick={handleLike}>Like ({post.likes})</button>
-      <h3>Comments</h3>
-      <ul>
-        {post.comments.map(comment => (
-          <li key={comment._id}>{comment.content}</li>
-        ))}
-      </ul>
-      <form onSubmit={handleCommentSubmit}>
-        <textarea
-          placeholder="Add a comment"
-          value={commentContent}
-          onChange={(e) => setCommentContent(e.target.value)}
-        />
-        <button type="submit">Comment</button>
-      </form>
+    <div className="text-gray-700 post-detail flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-center">帖子详情</h2>
+        <div className="post-info space-y-4">
+          <div>
+            <label className="block text-sm font-semibold mb-1">用户名</label>
+            <p>{post.name}</p>
+          </div>
+          <div>
+            <label className="block text-sm font-semibold mb-1">帖子内容</label>
+            <p>{post.content}</p>
+          </div>
+            <div>
+              <label className="block text-sm font-semibold mb-1">图片</label>
+              <img src={post.url} alt="post" className="w-full h-auto rounded-md" />
+            </div>
+        </div>
+        <button className="mt-4 w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400" onClick={() => navigate(-1)}>返回</button>
+      </div>
     </div>
   );
 }
