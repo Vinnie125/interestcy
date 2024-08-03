@@ -11,6 +11,7 @@ export interface Userdata {
 }
 
 export interface Circle{
+  id:number;
   name: string;
   description: string;
   location: string;
@@ -18,6 +19,7 @@ export interface Circle{
 }
 
 export interface POST{
+  id:number;
   name: string;
   content: string;
   url: string;

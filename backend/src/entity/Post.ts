@@ -4,6 +4,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 export class Post {
 
   @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   name: string;

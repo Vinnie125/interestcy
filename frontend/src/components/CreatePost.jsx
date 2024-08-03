@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import * as axios from 'axios';
 
 function CreateGroup() {
-  const [groupInfo, setGroupInfo] = useState({ name: '', content: '', url: ''});
+  const [groupInfo, setGroupInfo] = useState({id:0, name: '', content: '', url: ''});
   const navigate = useNavigate();
   const { groupId } = useParams();
   const client = axios.default;
@@ -17,6 +17,7 @@ function CreateGroup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     client.post(base,{
+      id: groupInfo.id,
       name: groupInfo.name,
       content: groupInfo.content,
       url: groupInfo.url
@@ -43,6 +44,18 @@ function CreateGroup() {
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">发帖</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+            <label className="block text-sm font-semibold mb-1">帖子ID</label>
+            <input
+              type="number"
+              name="id"
+              className="text-white w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              placeholder="请输入帖子ID"
+              value={groupInfo.id}
+              onChange={handleChange}
+              required
+            />
+          </div>
           <div>
             <label className="block text-sm font-semibold mb-1">用户名</label>
             <input

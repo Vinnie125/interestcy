@@ -17,7 +17,7 @@ export class InterestGroupService {
   async createGroup(groupInfo: Circle): Promise<{ success: boolean; message: string }> {
     const data = this.getData();
     const newGroup = {
-      id: Date.now(),
+      id: groupInfo.id,
       name: groupInfo.name,
       description: groupInfo.description,
       location: groupInfo.location,

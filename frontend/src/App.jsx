@@ -5,7 +5,6 @@ import Login from './components/Login';
 import InterestGroups from './components/InterestGroups';
 import CreateGroup from './components/CreateGroup';
 import CreatePost from './components/CreatePost';
-import PostDetail from './components/PostDetail';
 import MyInterestGroups from './components/MyInterestGroups';
 import Navbar from './components/Navbar';
 import HomePage from './components/HomePage';
@@ -31,9 +30,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/groups" element={<InterestGroups />} />
           <Route path="/create-group" element={<CreateGroup />} />
-          <Route path="/groups/:id" element={<InterestGroupPage />} />
+          <Route path="/groups/:groupId" element={<InterestGroupPage />} />
           <Route path="/createpost" element={<CreatePost />} />
-          <Route path="/groups/:groupId/posts/:postId" element={<PostDetail />} />
           <Route path="/my-groups" element={<MyInterestGroups />} />
         </Routes>
       </div>

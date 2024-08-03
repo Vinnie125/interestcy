@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import * as axios from 'axios';
 
 function CreateGroup() {
-  const [groupInfo, setGroupInfo] = useState({ name: '', description: '', location: '' ,members:''});
+  const [groupInfo, setGroupInfo] = useState({id:0, name: '', description: '', location: '' ,members:''});
   const navigate = useNavigate();
   const client = axios.default;
   const base = "http://127.0.0.1:7002/groups/create-group"
@@ -16,6 +16,7 @@ function CreateGroup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     client.post(base,{
+      id: groupInfo.id,
       name: groupInfo.name,
       description:groupInfo.description,
       location: groupInfo.location,
@@ -43,6 +44,18 @@ function CreateGroup() {
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">创建兴趣圈</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+            <label className="block text-sm font-semibold mb-1">兴趣圈序号</label>
+            <input
+              type="number"
+              name="id"
+              className="text-white w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              placeholder="请输入兴趣圈序号"
+              value={groupInfo.id}
+              onChange={handleChange}
+              required
+            />
+          </div>
           <div>
             <label className="block text-sm font-semibold mb-1">兴趣圈名称</label>
             <input
@@ -58,18 +71,19 @@ function CreateGroup() {
           <div>
             <label className="block text-sm font-semibold mb-1">描述</label>
             <textarea
-              name="content"
+               name="description"
+               placeholder="描述"
+               value={groupInfo.description}
+               onChange={handleChange}
+               required
               className="text-white w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="请输入兴趣圈描述"
-              value={groupInfo.description}
-              onChange={handleChange}
             />
           </div>
           <div>
             <label className="block text-sm font-semibold mb-1">位置</label>
             <input
               type="text"
-              name="url"
+              name="location"
               className="text-white w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="请输入位置"
               value={groupInfo.location}

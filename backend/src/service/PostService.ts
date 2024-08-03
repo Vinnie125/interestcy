@@ -17,6 +17,7 @@ export class PostService {
   async createPost(groupInfo: POST): Promise<{ success: boolean; message: string }> {
     const data = this.getData();
     const newGroup = {
+      id:groupInfo.id,
       name: groupInfo.name,
       content: groupInfo.content,
       url: groupInfo.url
