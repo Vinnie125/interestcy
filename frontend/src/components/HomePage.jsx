@@ -12,8 +12,8 @@ function HomePage() {
   return (
     <div className="home-page">
       <div className="content">
-        <h1>Welcome to the Interest Groups Platform</h1>
-        <p>Your one-stop solution for finding and creating interest groups.</p>
+        <h1>Welcome to my Interest Groups</h1>
+        <p>Happy creating, happy coding!</p>
         <button className="cta-button" onClick={handleExploreGroupsClick}>
           Explore Groups
         </button>

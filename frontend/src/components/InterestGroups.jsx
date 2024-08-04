@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import './InterestGroups.css';
 
 const interestGroups = [
-  { id: 1, name: '窝尔沃兴趣圈', description: '发现更多美好生活', location: '全国', members: 90},
-  { id: 2, name: '窝尔钓鱼趣', description: '全国', location: '全国', members: 35 },
-  { id: 3, name: '懒洋洋', description: '和懒洋洋一起长大', location: '全国', members: 350 },
+  { id: 1, name: '健身圈', description: '燃烧我的卡路里', location: '苏州', members: 90},
+  { id: 2, name: '钓鱼圈', description: '没有鱼竿', location: '苏州', members: 35 },
 
 ];
 
