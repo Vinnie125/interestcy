@@ -12,7 +12,7 @@ import * as util_request from './request/util.request'
 
 import * as websocket_client from './request/client.websocket'
 import InterestGroupPage from './components/InterestGroupPage';
-
+import UserActivityPage from './components/UserActicityPage';
 
 function App() {
   const [title, setTitle] = useState("");
@@ -33,6 +33,8 @@ function App() {
           <Route path="/groups/:groupId" element={<InterestGroupPage />} />
           <Route path="/createpost" element={<CreatePost />} />
           <Route path="/my-groups" element={<MyInterestGroups />} />
+          <Route path="/groups/activity" element={<UserActivityPage />} />
+
         </Routes>
       </div>
     </Router>

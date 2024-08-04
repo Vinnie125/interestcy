@@ -14,6 +14,8 @@ export class InterestGroupController {
 
   @Inject()
   interestGroupService: InterestGroupService;
+
+  @Inject()
   commentService: CommentService;
 
   @Post('/create-group')//创建兴趣圈
@@ -61,18 +63,32 @@ export class InterestGroupController {
   }
 
   @Post('/:groupId/:postId')
-async addComment(@Param('groupId') groupId: number, @Param('postId') postId: number, @Body() commentData: { content: string }) {
-  try {
-    const result = await this.commentService.addComment(groupId, postId, commentData);
-    this.ctx.body = { success: true, data: result };
-  } catch (error) {
-    this.ctx.body = { success: false, message: error.message };
+  async addComment(
+    @Param('groupId') groupId: number, 
+    @Param('postId') postId: number, 
+    @Body() commentData: { content: string }
+  ) {
+    try {
+      const result = await this.commentService.addComment(groupId, postId, commentData);
+      this.ctx.body = { success: true, data: result };
+    } catch (error) {
+      this.ctx.body = { success: false, message: error.message };
+    }
   }
-}
 
-  @Get('/:groupId/postId')
-  async getComments(@Param('postId') postId: number) {
-    const result = await this.commentService.getComments(postId);
-    return { success: true, data: result };
+    @Get('/:groupId')
+    async getComments(@Param('postId') postId: number) {
+        const result = await this.commentService.getComments(postId);
+        return { success: true, data: result };
+      }
+
+  @Get('/activity')
+  async getUserActivity() {
+    try {
+      const userActivity = await this.commentService.getUserActivity();
+      this.ctx.body = { success: true, data: userActivity };
+    } catch (error) {
+      this.ctx.body = { success: false, message: error.message };
+    }
   }
 }

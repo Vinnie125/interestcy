@@ -1,6 +1,5 @@
 import { Provide } from '@midwayjs/core';
 import * as fs from 'fs';
-
 const commentFilePath ='./src/comment.json';
 
 @Provide()
@@ -17,10 +16,10 @@ export class CommentService {
     return comments;
   }
 
-  async getComments(postId: number) {
+  async getComments(groupId: number) {
     const comments = this.getCommentsData();
-    const postComments = comments.find(c => c.postId === postId);
-    return postComments ? postComments.comments : [];
+    const groupComments = comments.filter(c => c.groupId === groupId);
+    return groupComments.map(gc => gc.comments).flat();
   }
 
   getCommentsData() {
@@ -29,5 +28,22 @@ export class CommentService {
 
   saveCommentsData(data: any) {
     fs.writeFileSync(commentFilePath, JSON.stringify(data, null, 2), 'utf-8');
+  }
+  async getUserActivity() {
+    const postFilePath = './src/post.json';
+    const posts = JSON.parse(fs.readFileSync(postFilePath, 'utf-8'));
+    const userActivity = {};
+
+    for (const post of posts) {
+      if (!userActivity[post.name]) {
+        userActivity[post.name] = 0;
+      }
+      userActivity[post.name]++;
+    }
+
+    return Object.keys(userActivity).map(name => ({
+      name,
+      postCount: userActivity[name],
+    }));
   }
 }

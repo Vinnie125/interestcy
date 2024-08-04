@@ -13,14 +13,17 @@ function InterestGroupPage() {
 
   useEffect(() => {
     // 设置帖子数据
-    const loadPosts = () => {
+    const loadPosts =async () => {
+      const response = await axios.default.get(`http://127.0.0.1:7002/groups/${groupId}`);
+      const comments= response.data.data ;
+      //alert(JSON.stringify(response.data))
       const loadedPosts = postData.map(post => ({
         user: {
           username: post.name,
           avatar: post.url,
         },
         content: post.content,
-        comments: [], // 假设目前没有评论数据
+        comments: comments.filter(comment => comment.postId === comments.id), 
       }));
       setPosts(loadedPosts);
     };
@@ -36,6 +39,7 @@ function InterestGroupPage() {
     const newComment = {
       content: commentInput[postId],
     };
+    //alert(JSON.stringify(newComment))
     try {
       await axios.default.post(`${base}/${postId}`, newComment);
       
@@ -65,13 +69,20 @@ function InterestGroupPage() {
         >
           返回
         </button>
-        <h1 className="text-gray-700 text-2xl font-bold">兴趣圈帖子</h1>
+        <h1 className="text-gray-700 text-2xl font-bold">帖子</h1>
+        <button
+          onClick={() => navigate(`/groups/activity`)}
+          className="text-white hover:underline"
+        >
+          查看用户活跃度
+        </button>
         <button
           onClick={() => navigate('/createpost')}
           className="text-white hover:underline"
         >
           发帖
         </button>
+        
       </div>
       <div className="max-w-4xl mx-auto mt-6 h-[calc(100vh-100px)] overflow-y-auto">
         {posts.length === 0 ? (

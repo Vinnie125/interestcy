@@ -37,7 +37,15 @@
     "lint": "mwts check",
     "lint:fix": "mwts fix",
     "ci": "npm run cov",
-    "build": "mwtsc --cleanOutDir"
+    "build": "mwtsc --cleanOutDir",
+    "pkg": "pkg . -t node18-win-x64 --out-path=dist/my-backend"
+  },
+  "bin":"./bootstrap.js",
+  "pkg":{
+    "scripts": "build/**/*.js",
+    "assets": [
+      "public/**/*"
+    ]
   },
   "repository": {
     "type": "git",
