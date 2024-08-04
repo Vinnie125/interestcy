@@ -5,6 +5,7 @@ import * as crossDomain from '@midwayjs/cross-domain';
 import * as validate from '@midwayjs/validate';
 import * as info from '@midwayjs/info';
 import { join } from 'path';
+import * as staticFile from '@midwayjs/static-file'
 // import { DefaultErrorFilter } from './filter/default.filter';
 // import { NotFoundFilter } from './filter/notfound.filter';
 import { ReportMiddleware } from './middleware/report.middleware';
@@ -14,6 +15,7 @@ import { ReportMiddleware } from './middleware/report.middleware';
     koa,
     ws,
     crossDomain,
+    staticFile,
     validate,
     {
       component: info,

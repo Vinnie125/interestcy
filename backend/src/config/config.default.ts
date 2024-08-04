@@ -9,5 +9,16 @@ export default {
   webSocket: {},
   cors: {
     origin: "*"
+  },
+  staticFile: {
+    dirs:{
+      default:{
+        prefix:"/",
+        alias:{
+          "/": "/index.html"
+        },
+        dir: "public"
+      }
+    }
   }
 } as MidwayConfig;
